@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: jyewordpressweb 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jyewordpressweb
+  template:
+    metadata:
+      labels:
+        app: jyewordpressweb 
+    spec:
+      containers:
+        - name: jyewordpressweb 
+          image: jyecontainerregistry.azurecr.io/jyewordpressweb
+          ports:
+          - containerPort: 80
