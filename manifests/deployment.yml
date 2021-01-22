@@ -1,19 +1,67 @@
-apiVersion : apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jyewordpressweb 
+  name: jyewordpressweb
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: jyewordpressweb
+      tier: cache
   template:
     metadata:
       labels:
-        app: jyewordpressweb 
+        app: jyewordpressweb
+        tier: cache
     spec:
       containers:
-        - name: jyewordpressweb 
-          image: jyecontainerregistry.azurecr.io/jyewordpressweb
-          ports:
+      - image: jyecontainerregistry.azurecr.io/jyewordpressweb
+        name: jyewordpressweb 
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: mysql-0.mysql
+        - name: WORDPRESS_DB_NAME
+          value: wordpress-db
+        - name: WORDPRESS_DB_USER
+          value: wp-admin
+        - name: WORDPRESS_DB_PASSWORD
+          value: dkagh1.
+        ports:
           - containerPort: 80
+            protocol: TCP
+#        volumeMounts:
+#          - name: wordpress-persistent-storage
+#            mountPath: /var/www/html
+        resources:
+          requests:
+            cpu: 50m
+            memory: 5Mi
+          limits:
+            cpu: 100m
+            memory: 20Mi
+#      affinity:
+#        podAffinity:
+#          requiredDuringSchedulingIgnoredDuringExecution:
+#          - labelSelector:
+#              matchExpressions:
+#              - key: tier
+#                operator: In
+#                values:
+#                - cache
+#            topologyKey: "kubernetes.io/hostname"  
+#      volumes:
+#        - name: wordpress-persistent-storage
+#          persistentVolumeClaim:
+#            claimName: pvc-wordpress
+#---
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: pvc-wordpress
+#spec:
+#  accessModes:
+#  - ReadWriteOnce
+#  storageClassName: default
+#  resources:
+#    requests:
+#      storage: 5Gi
