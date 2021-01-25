@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: jyewordpressweb
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: jyewordpressweb
@@ -19,7 +19,7 @@ spec:
         name: jyewordpressweb 
         env:
         - name: WORDPRESS_DB_HOST
-          value: jyewordpressdb-c65c655f4-54xjw.jyewordpressdb
+          value: jyewordpressdb:3306
         - name: WORDPRESS_DB_NAME
           value: wordpress-db
         - name: WORDPRESS_DB_USER
