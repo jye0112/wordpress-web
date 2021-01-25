@@ -19,7 +19,7 @@ spec:
         name: jyewordpressweb 
         env:
         - name: WORDPRESS_DB_HOST
-          value: mysql-0.mysql
+          value: jyewordpressdb-0.jyewordpressdb
         - name: WORDPRESS_DB_NAME
           value: wordpress-db
         - name: WORDPRESS_DB_USER
@@ -65,3 +65,4 @@ spec:
 #  resources:
 #    requests:
 #      storage: 5Gi
+
